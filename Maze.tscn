@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqaccsynsdg0"]
+
+[ext_resource type="Script" path="res://DungeonFactory3D.gd" id="1_vutoa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuw7a"]
+albedo_color = Color(0.666667, 0.666667, 0.666667, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_t5qrj"]
+material = SubResource("StandardMaterial3D_yuw7a")
+size = Vector2(1, 1)
+center_offset = Vector3(0, -0.5, 0)
+
+[sub_resource type="MultiMesh" id="MultiMesh_5h34f"]
+transform_format = 1
+mesh = SubResource("PlaneMesh_t5qrj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uj200"]
+albedo_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ut2tq"]
+material = SubResource("StandardMaterial3D_uj200")
+
+[sub_resource type="MultiMesh" id="MultiMesh_028ss"]
+transform_format = 1
+mesh = SubResource("BoxMesh_ut2tq")
+
+[sub_resource type="Environment" id="Environment_06x3w"]
+background_mode = 1
+background_color = Color(0.533333, 0.533333, 0.533333, 1)
+ssao_enabled = true
+sdfgi_use_occlusion = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DungeonFactory" type="Node3D" parent="."]
+script = ExtResource("1_vutoa")
+
+[node name="FloorInstancer" type="MultiMeshInstance3D" parent="DungeonFactory"]
+multimesh = SubResource("MultiMesh_5h34f")
+
+[node name="WallInstancer" type="MultiMeshInstance3D" parent="DungeonFactory"]
+multimesh = SubResource("MultiMesh_028ss")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 10, 20)
+environment = SubResource("Environment_06x3w")
+fov = 90.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
+light_energy = 8.0
+spot_range = 80.0
